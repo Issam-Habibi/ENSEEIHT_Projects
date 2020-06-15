@@ -1,0 +1,98 @@
+import java.util.*;
+
+/** Le menu du restaurant
+ * 
+ * @author ISSAM
+ *
+ */
+public class MenuRestaurant {
+	
+	//Le nom du menu
+	private String nomMenuRestaurant;
+	
+	//Une liste contenant les entrées du menu
+	private List<Entree> menuEntree;
+	
+	//Une liste contenant les plats principals du menu
+	private List<PlatPrincipal> menuPlatPrincipal;
+	
+	//Une liste contenant les desserts du menu
+	private List<Dessert> menuDessert;
+	
+	/** Construire un menu à partir de son nom, ses entrée,
+	 * ses plats principaux et ses desserts.
+	 * @param nomMenu le nom du menu
+	 */
+	public Menu(String nomMenu) {
+		this.nomMenuRestaurant = nomMenu;
+		this.menuEntree = new ArrayList<Entree>();
+		this.menuPlatPrincipal = new ArrayList<PlatPrincipal>();
+		this.menuDessert = new ArrayList<Dessert>();
+	}
+	
+	/** Récupérer le nom du menu
+	 * 
+	 * @return le nom du menu
+	 */
+	public String getNomMenu() {
+		return this.nomMenuRestaurant;
+	}
+	
+	/** Mettre à jour le nom du menu
+	 * 
+	 * @param nom le nouveau nom 
+	 */
+	public void setNomMenu(String nom) {
+		this.nomMenuRestaurant = nom;
+	}
+	
+	/** Récupérer une liste des entrées du menu
+	 * 
+	 * @return les entrées du menu
+	 */
+	public List<Entree> getMenuEntree() {
+		return this.menuEntree;
+	}
+	
+	/** Récupérer une liste des plats principaux du menu
+	 * 
+	 * @return les plats principaux du menu
+	 */
+	public List<PlatPrincipal> getMenuPlatPrincipal() {
+		return this.menuPlatPrincipal;
+	}
+	
+	/** Récupérer une liste des desserts du menu
+	 * 
+	 * @return les desserts du menu
+	 */
+	public List<Dessert> getMenuDessert() {
+		return this.menuDessert;
+	}
+	
+	/** Ajouter une entrée au menu
+	 * 
+	 * @param entree l'entrée à ajouter
+	 */
+	public void ajouterEntree(Entree entree) {
+		this.menuEntree.add(entree);
+	}
+	
+	/** Ajouter un plat principal au menu
+	 * 
+	 * @param platPrincipal le plat principal à ajouter
+	 */
+	public void ajouterPlatPrincipal(PlatPrincipal platPrincipal) {
+		this.menuPlatPrincipal.add(platPrincipal);
+	}
+	
+	/** Ajouter un dessert au menu
+	 * 
+	 * @param dessert le dessert à ajouter
+	 */
+	public void ajouterDessert(Dessert dessert) {
+		this.menuDessert.add(dessert);
+	}
+	
+	
+}

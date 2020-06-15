@@ -1,0 +1,150 @@
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Observable;
+import java.util.Set;
+/**
+ * L'ensemble de plats dans la commande du client
+ * @author ISSAM
+ *
+ */
+public class Choix extends Observable {
+	
+	//public String payement;
+	public Map<String, ArrayList<PlatResto>> map;
+	
+	/** Constructeur des choix
+	 * 
+	 */
+	public Choix() {
+		this.map = new HashMap<>();
+	}
+	
+	/** Le prix total de la commande du client
+	 * 
+	 * @return le prix total
+	 */
+	public double getPrixTotal() {
+		double prix = 0;
+		Set<Entry<String, ArrayList<PlatResto>>> mapSet = map.entrySet();
+		for (Entry<String, ArrayList<PlatResto>> entry : mapSet) {
+			ArrayList<PlatResto> listPlats = entry.getValue();
+			for (Plat plat : listPlats) {
+				prix = prix + plat.getPrixPlat();
+			}
+		}
+		return prix;
+	}
+	
+	
+	/** Version string de la commande choisie
+	 * 
+	 * @return la commande
+	 */
+	public String toStringCommande() {
+		String str = "";
+		Set<Entry<String, ArrayList<PlatResto>>> mapSet = map.entrySet();
+		for (Entry<String, ArrayList<PlatResto>> entry : mapSet) {
+			ArrayList<PlatResto> listPlats = entry.getValue();
+			for (PlatResto plat : listPlats) {
+				str = str + "   " + plat.getNomPlat();
+			}
+		}
+		return str;
+	}
+
+	
+	
+	/** Version String des entrées choisies
+	 * par l'utilisateur
+	 * @return les entrées
+	 */
+	public String toStringEntree() {
+		String str = "";
+		Set<Entry<String, ArrayList<PlatResto>>> mapSet = map.entrySet();
+		for (Entry<String, ArrayList<PlatResto>> entry : mapSet) {
+			if (entry.getKey() == "Entree") {
+				ArrayList<PlatResto> listPlats = entry.getValue();
+				for (Plat plat : listPlats) {
+					str = str + "   " + plat.getNomPlat();
+				}
+			}
+		}
+		return str;
+	}
+	
+	/** Version String des plats principaux choisis
+	 * par l'utilisateur
+	 * @return les plats principaux
+	 */
+	public String toStringPlatPrincipal() {
+		String str = "";
+		Set<Entry<String, ArrayList<PlatResto>>> mapSet = map.entrySet();
+		for (Entry<String, ArrayList<PlatResto>> entry : mapSet) {
+			if (entry.getKey() == "Plat Principal") {
+				ArrayList<PlatResto> listPlats = entry.getValue();
+				for (Plat plat : listPlats) {
+					str = str + "   " + plat.getNomPlat();
+				}
+			}
+		}
+		return str;
+	}
+	
+	/** Version String des desserts choisies
+	 * par l'utilisateur
+	 * @return les desserts
+	 */
+	public String toStringDessert() {
+		String str = "";
+		Set<Entry<String, ArrayList<PlatResto>>> mapSet = map.entrySet();
+		for (Entry<String, ArrayList<PlatResto>> entry : mapSet) {
+			if (entry.getKey() == "Dessert") {
+				ArrayList<PlatResto> listPlats = entry.getValue();
+				for (Plat plat : listPlats) {
+					str = str + " // " + plat.getNomPlat();
+				}
+			}
+		}
+		return str;
+	}
+	
+	
+	/** Ajouter une entrée à l'ensemble au commande
+	 * 
+	 * @param lesEntrees les entrées
+	 */
+	public void ajouterEntree(ArrayList<PlatResto> lesEntrees ) {
+		this.map.put("Entree", lesEntrees);
+		this.setChanged();
+		this.notifyObservers();
+	}
+	
+	/** Ajouter des plats principaux au commande
+	 * 
+	 * @param lesPlatsP les plat principaux
+	 */
+	public void ajouterPlatPrincipal(ArrayList<PlatResto> lesPlatsP ) {
+		this.map.put("Plat Principal", lesPlatsP);
+		this.setChanged();
+		this.notifyObservers();
+	}
+	
+	/** Ajouter des desserts au commande
+	 * 
+	 * @param lesDesserts les desserts
+	 */
+	public void ajouterDessert(ArrayList<PlatResto> lesDesserts ) {
+		this.map.put("Dessert", lesDesserts);
+		this.setChanged();
+		this.notifyObservers();
+	}
+	
+
+	
+		
+
+}

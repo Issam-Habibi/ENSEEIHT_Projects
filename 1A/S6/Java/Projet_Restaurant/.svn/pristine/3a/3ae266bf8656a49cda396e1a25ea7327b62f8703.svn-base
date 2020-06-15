@@ -1,0 +1,48 @@
+/** Un employé dans le réstaurant
+ * 
+ * @author LOTFI
+ *
+ */
+
+
+public class Employee {
+	
+	private String FirstName;
+	private String LastName;
+	private String ID;
+	private String Function;
+	
+	
+	public Employee(String Prenom, String Nom, String identifiant, String Function) {
+		this.FirstName = Prenom;
+		this.LastName = Nom;
+		this.ID = identifiant;
+		this.Function = Function;
+	}
+	
+	public String getFirstName() {
+		return this.FirstName;
+	}
+	
+	public String getLastName() {
+		return this.LastName;
+	}
+	
+	
+	public String getID() {
+		return this.ID;
+	}
+	
+	public String getFunction() {
+		return this.Function;
+	}
+	
+	public void afficher() {
+		System.out.println("FisrtName : " + this.FirstName);
+		System.out.println("LastName : " + this.LastName);
+		System.out.println("Code identification : " + this.ID);
+		System.out.println("Fonction : " + this.Function);
+	}
+	
+
+}

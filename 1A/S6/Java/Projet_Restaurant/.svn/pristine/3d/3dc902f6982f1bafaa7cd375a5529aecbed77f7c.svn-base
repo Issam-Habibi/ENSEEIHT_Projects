@@ -1,0 +1,91 @@
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+/**
+ * The class handles the graphical side of the home screen
+ *
+ * @author Hamza MOUDDENE
+ * @version 1.0
+ */
+public class Home implements ActionListener {
+
+    // Attribute of class
+    private JFrame window;
+    private JLabel logo, l1, pictureLabel, footerLabel;
+    private JButton b1, b2, menu;
+    private JPanel headLeft, headCenter, headRight, body, footer;
+    private BufferedImage img;
+    private ImageIcon icon;
+
+    /**
+     * The constructor of the home window
+     */
+    public Home() {
+        GUI home = new GUI();
+
+        this.window = home.createWindow("Home", 1000, 800);
+
+        this.headLeft = home.createPanel(0, 0, 150, 40, new Color(211, 211, 211));
+        this.logo = home.createLabel("Resto'N7", 10, 10, 120, 40);
+        this.headLeft.add(logo);
+        this.window.add(headLeft);
+
+        this.headCenter = home.createPanel(150, 0, 630, 40, new Color(211, 211, 211));
+        this.window.add(headCenter);
+
+        this.headRight = home.createPanel(780, 0, 220, 40, new Color(211, 211, 211));
+        this.b1 = home.createButton("Sign in", 890, 10, 100, 40, new Color(9, 128, 67), Color.WHITE);
+        this.b2 = home.createButton("Sign up", 780, 10, 100, 40, Color.WHITE, new Color(9, 128, 67));
+        this.headRight.add(b1);
+        this.b1.addActionListener(this);
+        this.headRight.add(b2);
+        this.b2.addActionListener(this);
+        this.window.add(headRight);
+
+        this.l1 = home.createLabel("Welcome home!", 440, 50, 120, 40);
+        this.window.add(l1);
+
+        this.menu = home.createButton("Get the menu", 425, 100, 150, 50, new Color(84, 91, 98), Color.WHITE);
+        this.menu.addActionListener(this);
+        this.window.add(this.menu);
+
+        this.footer = home.createPanel(0, 725, 1000, 75, new Color(211, 211, 211));
+        this.footerLabel = home.createLabel("© 2020 Resto'N7 ", 500, 400, 100, 50);
+        this.footer.add(this.footerLabel);
+        this.window.add(this.footer);
+
+        this.body = home.createPanel(200, 200, 600, 400, new Color(249, 244, 244));
+        try {
+            this.img = ImageIO.read(new File("pics/homeBackground.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.icon = new ImageIcon(img);
+        this.pictureLabel = new JLabel();
+        this.pictureLabel.setIcon(this.icon);
+        this.body.add(pictureLabel);
+        this.window.add(this.body);
+
+        this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.b1) {
+            new SignIn();
+        } else if (e.getSource() == this.b2) {
+            new SignUp();
+        } else if (e.getSource() == this.menu) {
+                //new Menu();
+        } else {
+            System.out.println("Unkonwn action!");
+        }
+    }
+
+}

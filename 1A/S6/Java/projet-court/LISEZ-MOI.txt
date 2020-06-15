@@ -1,0 +1,105 @@
+Nom       : HABIBI
+Prénom    : ISSAM
+Groupe TP : D
+
+Les « ... » indiquent les endroits à compléter.
+
+=====[ Temps passé ]============================================================
+
+Ces informations de temps sont demandées à titre indicatif et ne sont pas
+prises en compte dans la notation du projet.
+
+Toutes les durées sont à saisir en heures.  Par exemple, si vous avez passé
+1h45, il faudra indiquer 1.75.  Si vous avez passé 2h30, il faudra indiquer
+2.5.
+
+* Temps passé sur la V1 (en h) : 5
+* Temps passé sur la V2 (en h) : 3
+
+
+=====[ Questions ]==============================================================
+
+--------------------------------------------------------------------------------
+Pourquoi l'exception OperationInterditeException ne peut pas être définie
+comme vérifiée par le compilateur ?
+--------------------------------------------------------------------------------
+
+L'exception OperationInterditeException hérite de RunTimeException qui n'est pas
+une exception vérifiée , donc le compilateur ne va pas la vérifier .
+
+
+--------------------------------------------------------------------------------
+Expliquer ce qu'il faut faire pour ajouter un nouveau niveau de jeu, par
+exemple la stratégie lente (C13).  Pour plus de précision, on numérotera
+les étapes à faire.
+--------------------------------------------------------------------------------
+
+1- Créer une interface Strategie modélisant les stratégies possibles
+
+2- Chaque stratégie sera une réalisation de cette interface , y compris 
+la stratégie "Stratégie lente".Donc il suffit de créer une classe
+StrategieLente qui implémente Strategie.
+
+3- Utiliser la méthode toStrategie(..) pour convertir un string 
+modélisant la stratégie saisie en une vraie stratégie dans la classe Partie.
+
+
+--------------------------------------------------------------------------------
+Expliquer ce qui permet, dans votre conception, de changer dynamiquement
+(en cours d'exécution du programme) la stratégie d'un joueur (C14).
+--------------------------------------------------------------------------------
+
+On pourra ajouter l'option de lancer le programme principal Partie avec un 
+argument supplémentaire " -changeable ". Si c'est le cas, on le traitera
+dans les blocs de if/else de la méthode principal main(). On demandera
+dans chaque étape à l'utilisateur de confirmer s'il veut ou pas changer de stratégie
+après la saisie du nombre d'allumettes qu'il veut retier:
+" Voulez vous changer de stratégie ? (o/n) "
+Si la réponse est affirmative , on demandera à l'utilisateur de saisir le nom
+de sa nouvelle stratégie . Ensuite, on utilisera la méthode setStrategie(..)
+pour changer la stratégie du joueur .
+
+
+=====[ Explications ]===========================================================
+
+--------------------------------------------------------------------------------
+Donner ici les explications supplémentaires utiles à la compréhension du
+travail rendu.
+--------------------------------------------------------------------------------
+
+Classe JeuAlumettes : Elle modélise le jeu réel . Dans la méthode retier(..)
+on doit discuter 3 cas principaux : retirer un nombre d'allumettes < 1 , retirer
+un nombre d'allumettes > 3 alors qu'il reste effectivement plus que 3 allumettes
+et finalement retirer un nombre d'allumettes supérieur au nombre d'allumettes
+restantes.
+
+Classe Arbitre:  - Un arbitre a comme attributs les deux joueurs mais aussi son état
+méfiant ou confiant . 
+
+                 - La méthode estJeuFinie(..) vérifie si le jeu est finie ou pas selon
+le nombre d'allumettes restantes . Si le jeu est finie, elle déclare le gagnant
+et le perdant.
+
+                 - La méthode sousArbitrer(..) aide l'arbitrage principal du jeu pour 
+éviter les méthodes trop longues. Si l'arbitre est méfiant, la méthode getPrise(..) est
+appliquée sur le Proxy pour contrôler l'utilisation de la méthode retirer(..) dans la 
+stratégie choisie, sinon on appliquera la méthode getPrise(..) sur le jeu réel pour rien
+contrôler.
+
+                 - La méthode Arbitrer(..) représente l'arbitrage principal, le premier joueur
+joue toujours dans des tours impairs , le deuxième joueur joue toujours dans des tours
+pairs.
+
+Classe Procuration : C'est le proxy , la méthode retier lève directement l'exception
+OperationInterditeException pour interdire son utilisation.
+
+
+Classe Partie : -La méthode toStrategie(..) transforme un String représentant
+une stratégie en une vraie stratégie.
+
+                -Si la ligne de commandes contient deux arguments alors l'utilisateur
+veut un arbitre méfiant, donc il faut récupérer directement les noms des joueurs
+et leurs stratégies avec la méthode split (appliquée deux fois !). Sinon, il faudra
+vérifier que le premier argument est "-confiant" .
+
+--------------------------------------------------------------------------------

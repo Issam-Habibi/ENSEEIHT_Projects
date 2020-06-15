@@ -1,0 +1,99 @@
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+/**
+ * The class handles the graphical side of the login part
+ *
+ * @author Hamza MOUDDENE
+ * @version 1.0
+ */
+public class SignIn implements ActionListener {
+
+    JFrame windowLog;
+    JLabel l1;
+    JTextField text;
+    JLabel l2;
+    JPasswordField passwd;
+    JButton b;
+
+    /**
+     * Constructor of login side
+     */
+    public SignIn() {
+        GUI log = new GUI();
+
+        this.windowLog = log.createWindow("Sign in", 1000, 800);
+        this.l1 = log.createLabel("Username", 400, 300, 80, 30);
+        this.text = log.createText(600, 300, 100, 30);
+        this.l2 = log.createLabel("Password", 400, 375, 80, 30);
+        this.passwd = log.createPasswd(600, 375, 100, 30);
+        this.b = log.createButton("Login", 500, 500, 80, 30, new Color(54, 191, 247), Color.WHITE);
+
+
+        windowLog.add(l1);
+
+        windowLog.add(text);
+
+        windowLog.add(l2);
+
+        windowLog.add(passwd);
+
+        windowLog.add(b);
+        b.addActionListener(this);
+    }
+
+    public boolean checkCredentials(String ID, String passwd) {
+        JSONParser parser = new JSONParser();
+        try {
+            JSONArray userList = (JSONArray) parser.parse(new FileReader("data/users.json"));
+
+            for (Object user : userList) {
+                JSONObject usr = (JSONObject) user;
+
+                String username = (String) usr.get("Username");
+                String password = (String) usr.get("Password");
+
+                if (ID.equals(username) && passwd.equals(password)) {
+                    return true;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == b) {
+            if (checkCredentials(text.getText(), new String(passwd.getPassword()))) {
+                //OLD: System.out.println("success");
+            	//Modifi� par Younes:
+                JOptionPane.showMessageDialog(windowLog,"Logged in successfully.");
+                //Modifi� par Younes:
+                this.windowLog.setVisible(false);
+                //Modifier par Hatim
+                new RegisteredCustomer();
+            } else {
+                JOptionPane.showMessageDialog(windowLog,"Wrong username or password.");
+            }
+
+        }
+    }
+}
+

@@ -1,0 +1,28 @@
+import javax.swing.*;
+
+/**
+ * The main class that launchs the program
+ *
+ * @author Hamza MOUDDENE
+ * @version 1.0
+ */
+public class Main {
+
+
+    /**
+     * The main method
+     *
+     * @param args java command line arguments
+     */
+    public static void main(String[] args) {
+        GUI gui = new GUI();
+        JFrame window = gui.createWindow("Home", 1000, 800); // create home window
+
+        JButton b1 = gui.createButton("Admin",130,100,100, 40); //create admin button
+        JButton b2 = gui.createButton("Client", 130,200,100, 40); //create client button
+
+        window.add(b1); //adding b1 in window
+        window.add(b2); //adding b2 in window
+
+    }
+}

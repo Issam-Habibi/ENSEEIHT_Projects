@@ -1,0 +1,30 @@
+#!/bin/bash
+ip link set dev eth0 up
+ip addr add 1.47.95.19/28 dev eth0
+
+#Le routage statique
+#ip route add 192.168.108.128/25 via 1.47.95.17
+#ip route add 1.47.95.128/25 via 1.47.95.17
+#ip route add 1.47.95.64/26 via 1.47.95.17
+#ip route add 1.47.95.32/27 via 1.47.95.17
+
+#Ajouter la route par défaut via le routeur des services
+ip route add default via 1.47.95.17
+
+# Créer l'utilisateur ihabibi de mot de passe issam
+useradd ihabibi
+echo "ihabibi:issam" | chpasswd
+mkdir /home/ihabibi
+
+# ihabibi est le propriétaire
+chown ihabibi /home/ihabibi
+usermod --shell /bin/bash ihabibi
+
+hostname FTP
+echo "1.47.95.19 FTP" >> /etc/hosts
+
+# Désactiver le mode world-writable
+chmod o-w /etc/proftpd/ etc/proftpd/modules.conf etc/proftpd/proftpd.conf 
+
+# Démarrer le serveur FTP
+service proftpd start

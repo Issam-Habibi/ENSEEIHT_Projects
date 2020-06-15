@@ -1,0 +1,35 @@
+/** L'état financier du restaurant
+ * 
+ * @author LOTFI
+ *
+ */
+
+/* YOUNES: mnin tdiri swing dyal financialstate golihali 3afak 
+ * 7it 3ndi un boutton Etat Financier f swing dyali o ghandiro ghaymchi nichane lswing dyalk
+ * */
+public class FinancialState {
+	
+	public double rstBalance;
+	
+	public FinancialState(double balance) {
+		this.rstBalance = balance;
+	}
+	
+	
+	public double getRestauBalance() {
+		return this.rstBalance;
+	}
+	
+	public void setRestauBalance(double newBalance) {
+		 this.rstBalance = newBalance;
+	}
+	
+	public void addGain( double gain) {
+		this.rstBalance = this.rstBalance + gain;
+	}
+	
+	public void SubstractLoss(double perte) {
+		this.rstBalance = this.rstBalance - perte;
+	}
+
+}

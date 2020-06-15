@@ -1,0 +1,30 @@
+=====[ Relecture du code ]======================================================
+
+Remarque : n points de pénalité ==> n points perdus sur la note.
+
+Fichier LISEZ-MOI.txt : (-0) / -2
+    question 1 : réponse fausse ou absente (peu claire) : (-0) / -1.
+    question 2 : réponse fausse ou absente (peu claire) : (-0) / -1 .
+    explications pertinentes : Bonus : +1 pt.
+
+Commentaire de documentation : 	(-0) / -1
+    * Commentaires non pertinents : (-0) / -1
+
+Forme (total = -5) : (-0.5) / -5 
+    * indentation			(-0)  / -1
+    * choix des identifiants		-1
+    * ordre des éléments dans la classe (-0)  / -0.5
+    * variable locale inutile		(-0.5)  / -0.5
+    * trop de variables inutiles (autant de variables locales que
+      d'expressions) 
+    * if au lieu d'une affectation booléenne	(-0)  / -0.5
+    * orthographe			(-0)  / -1
+    * utilisation d'un if au lieu d'une expression booléenne : (-0)  / -0.5
+
+
+Test unitaires (total -1) : (-0.5) / -1
+    * les tests doivent être découpés en méthode test* (CercleTest)	(-0)  / -1
+
+Autres erreurs : (maximum 1 pt) (-0)  / -1
+
+--------------------------------------------------------------------------------

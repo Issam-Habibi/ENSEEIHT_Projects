@@ -1,0 +1,19 @@
+/** Un plat principal est un plat servi par 
+ * le restaurant
+ * @author ISSAM
+ *
+ */
+
+public class PlatPrincipal extends PlatAbstrait {
+	
+	/** Construire un plat principal à partir de son nom, son prix
+	 * et sa disponibilité
+	 * @param nomPlat le nom du plat principal
+	 * @param prixPlat le prix du plat principal
+	 * @param disponibilite la disponibilité du plat principal
+	 */
+	public PlatPrincipal(String nomPlatPrincipal, double prixPlatPrincipal, boolean disponibilite) {
+		super(nomPlatPrincipal, prixPlatPrincipal, disponibilite);
+	}
+	
+}

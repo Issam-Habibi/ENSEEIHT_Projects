@@ -1,0 +1,28 @@
+import java.awt.List;
+import java.util.ArrayList;
+
+public class Test {
+
+	public static void main(String[] args) {
+		
+		PlatResto salade1 = new PlatResto (Plat.Etat.ENTREE,"salade nordique", 5, true);
+		PlatResto salade2 = new PlatResto (Plat.Etat.ENTREE,"salade cesar", 5, true);
+		PlatResto salade3 = new PlatResto (Plat.Etat.ENTREE,"salade bressane", 6, true);
+		PlatResto salade4 = new PlatResto (Plat.Etat.ENTREE,"salade asiatique", 6, true);
+
+		ArrayList<PlatResto> lesEntrees = new ArrayList<PlatResto>();
+		
+		lesEntrees.add(salade1);
+		lesEntrees.add(salade2);
+		lesEntrees.add(salade3);
+		lesEntrees.add(salade4);
+
+		Menu menu = new Menu("Issam");
+		
+		menu.setMenuEntree(lesEntrees);
+		Choix choix = new Choix();
+		MenuSwing menuSwing = new MenuSwing(menu, choix);
+
+	}
+
+}

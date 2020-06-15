@@ -1,0 +1,44 @@
+#!/bin/bash
+ip link set dev eth0 up
+ip addr add 1.47.95.34/27 dev eth0
+ip link set dev eth1 up
+ip addr add 1.47.95.17/28 dev eth1
+
+#Le routage statique
+#echo 1 > /proc/sys/net/ipv4/ip_forward
+#ip route add 192.168.106.128/25 via 1.47.95.33
+#ip route add 1.47.95.128/25 via 1.47.95.33
+#ip route add 1.47.95.64/26 via 1.47.95.33
+
+
+#le routage dynamique
+service quagga start
+sleep 1
+
+# Ne rien permettre dans un premier temps
+iptables -P INPUT DROP
+iptables -P OUTPUT DROP
+iptables -P FORWARD DROP
+
+# Permettre de pinger
+iptables -t filter -A OUTPUT -p icmp -j ACCEPT
+iptables -t filter -A INPUT -p icmp -j ACCEPT
+iptables -t filter -A FORWARD -p icmp -j ACCEPT
+
+# Permettre le RIP Routing
+iptables -A INPUT -p udp --dport 520 -j ACCEPT
+iptables -A OUTPUT -p udp --dport 520 -j ACCEPT
+iptables -A FORWARD -p udp --dport 520 -j ACCEPT
+
+# Permettre au DNS de marcher
+iptables -t filter -A FORWARD -d 1.47.95.18/28 -p udp --dport 53 -j ACCEPT
+iptables -t filter -A FORWARD -s 1.47.95.18/28 -p udp --sport 53 -j ACCEPT
+
+# Permettre au HTTP de marcher
+iptables -t filter -A FORWARD -d 1.47.95.20/28 -p tcp --dport 80 -j ACCEPT
+iptables -t filter -A FORWARD -s 1.47.95.20/28 -p tcp --sport 80 -j ACCEPT
+
+# Permettre au FTP de marcher
+iptables -A FORWARD -d 1.47.95.19/28 -p tcp --dport 21 -j ACCEPT
+iptables -A FORWARD -s 1.47.95.19/28 -p tcp --sport 21 -j ACCEPT
+iptables -A FORWARD -p tcp --sport 1024: --dport 1024: -j ACCEPT

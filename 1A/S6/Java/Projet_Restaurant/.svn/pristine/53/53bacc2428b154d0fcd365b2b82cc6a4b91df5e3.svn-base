@@ -1,0 +1,72 @@
+
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+/**
+ *  This class handles the menu which contains all the functionalities
+ *   for an registered customer 
+ *
+ * @author Hatim MESKINE
+ * @version 1.0
+ */
+
+public class RegisteredCustomer implements ActionListener {
+
+	JFrame windowRegCust;
+    JButton b1, b2, b3, b4, b5, b6;
+    
+	public RegisteredCustomer() {
+		GUI RegCust = new GUI();
+        this.windowRegCust = RegCust.createWindow("Welcome ", 1000, 800);
+        this.b1 = RegCust.createButton("Visualiser le menu", 100, 100, 200, 30, new Color(253, 241, 184), Color.BLACK);
+        this.b2 = RegCust.createButton("Faire une commande", 100, 200, 250, 30, new Color(253, 241, 184), Color.BLACK);
+        this.b3 = RegCust.createButton("Reserver une table", 100, 300, 250, 30, new Color(253, 241, 184), Color.BLACK);
+        this.b4 = RegCust.createButton("Avis et notes ", 100, 400, 250, 30, new Color(253, 241, 184), Color.BLACK);
+        this.b5 = RegCust.createButton("Points de fidélité ", 100, 500, 250, 30, new Color(253, 241, 184), Color.BLACK);
+        this.b6 = RegCust.createButton("Logout ", 700, 100, 200, 40, new Color(0, 0, 0), Color.WHITE);
+
+        windowRegCust.add(b1);
+        b1.addActionListener(this);
+        windowRegCust.add(b2);
+        b2.addActionListener(this);
+        windowRegCust.add(b3);
+        b3.addActionListener(this);
+        windowRegCust.add(b4);
+        b4.addActionListener(this);
+        windowRegCust.add(b5);
+        b5.addActionListener(this);
+        windowRegCust.add(b6);
+        b6.addActionListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+		 if (evt.getSource() == b1) {
+	                
+	            } 
+		 else if (evt.getSource() == b2){
+
+		 }
+		 else if (evt.getSource() == b3) {
+			 
+		 }
+		 else if (evt.getSource() == b4) {
+			 
+		 }
+         else if (evt.getSource() == b5) {
+			 
+		 }
+         else if (evt.getSource() == b6) {
+        	Logout logout = new Logout(this);
+        	logout.wd.setVisible(true);
+		 }
+	}
+	
+
+}

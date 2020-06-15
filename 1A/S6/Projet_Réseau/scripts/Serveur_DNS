@@ -1,0 +1,75 @@
+#!/bin/bash
+ip link set dev eth0 up
+ip addr add 1.47.95.18/28 dev eth0
+
+#Le routage statique
+#ip route add 192.168.106.128/25 via 1.47.95.17
+#ip route add 1.47.95.128/25 via 1.47.95.17
+#ip route add 1.47.95.64/26 via 1.47.95.17
+#ip route add 1.47.95.32/27 via 1.47.95.17
+
+#Ajouter la route par défaut via le routeur des services
+ip route add default via 1.47.95.17
+
+
+#Configurer le serveur DNS
+
+service bind9 start
+
+CONFIGURATIONLOCALE="
+zone \"monsupersite.com\" {
+        type master;
+        file \"/etc/bind/db.monsupersite.com\";
+        allow-transfer { 1.47.95.18; };
+        also-notify { 1.47.95.18; };
+ };
+zone \"95.47.1.in-addr.arpa\" {
+        type master;
+        file \"/etc/bind/db.42\";
+        allow-transfer { 1.47.95.18; };
+        also-notify { 1.47.95.18; };
+ };"
+echo -e "$CONFIGURATIONLOCALE" >> "/etc/bind/named.conf.local"
+
+FORWARD_ZONE_TMP="
+;
+; BIND data file for monsupersite.com
+;
+\$TTL    604800
+@       IN      SOA     monsupersite.com. root.monsupersite.com. (
+                              5         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      www.monsupersite.com.
+@       IN      A       1.47.95.18
+@       IN      AAAA    ::1
+www     IN      A       1.47.95.18
+"
+echo -e "$FORWARD_ZONE_TMP" >> "/etc/bind/db.monsupersite.com"
+
+REVERSE_ZONE_TMP="
+;
+; BIND reverse data file for local 1.47.95.XXX
+;
+\$TTL    604800
+@       IN      SOA     www.monsupersite.com. root.monsupersite.com. (
+                              5        ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      www.
+18      IN      PTR     www.monsupersite.com.
+"
+echo -e "$REVERSE_ZONE_TMP" >> "/etc/bind/db.1.47.95"
+
+
+service bind9 restart
+
+
+
+

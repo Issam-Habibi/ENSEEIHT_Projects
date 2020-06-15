@@ -1,0 +1,17 @@
+#!/bin/bash
+ip link set dev eth0 up
+ip addr add 1.47.95.20/28 dev eth0
+
+#Le routage statique
+#ip route add 192.168.106.128/25 via 1.47.95.17
+#ip route add 1.47.95.128/25 via 1.47.95.17
+#ip route add 1.47.95.64/26 via 1.47.95.17
+#ip route add 1.47.95.32/27 via 1.47.95.17
+
+#Ajouter la route par défaut via le routeur des services
+ip route add default via 1.47.95.17
+
+#Apache2 server
+service apache2 start
+
+

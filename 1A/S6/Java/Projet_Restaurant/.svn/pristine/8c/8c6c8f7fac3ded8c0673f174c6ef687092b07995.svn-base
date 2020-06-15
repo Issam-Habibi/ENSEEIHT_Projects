@@ -1,0 +1,8 @@
+
+public class Home_Swing_main {
+
+	public static void main(String[] args) {
+		new Home_Swing();
+	}
+
+}

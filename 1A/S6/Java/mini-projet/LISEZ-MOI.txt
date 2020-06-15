@@ -1,0 +1,41 @@
+Nom       : HABIBI 
+Prénom    : ISSAM
+Groupe TP : D
+
+
+Consigne :  Ci-dessous, répondre à la place des « ... ».
+
+
+=====[ Temps ]==================================================================
+
+Temps consacré au projet pour rendre la V1 : 2 heures 00 minutes
+Temps consacré au projet pour rendre la V2 : ... heures ... minutes
+(Pour la V2 on ne tiendra pas du temps passé sur la V1)
+(Bien sûr, Les temps renseignés ici ne sont pas pris en compte dans la notation)
+
+
+=====[ Questions ]==============================================================
+
+Indiquer la relation UML entre Cercle et le Point centre du cercle.
+-------------------------------------------------------------------
+
+C'est une relation de composition vu qu'un cercle ne peut pas exister sans son centre qui est un point et que la destruction d'un
+cercle implique la destruction de son centre . 
+
+
+Comment est réalisée l'exigence E18 ?
+-------------------------------------
+
+L'exigence E18 est assurée par le fait de choisir les attributs comme privés
+et aussi par le fait de construire une nouveau point dans le "getter" getCentre
+au lieu de juste retourner la valeur this.Centre , ce qui évitera de changer
+le centre du cercle si on fait une affectation à ce getter .
+
+
+
+=====[ Explications ]===========================================================
+
+(Facultatif) Donner ici les explications supplémentaires utiles à la
+compréhension du travail rendu.
+
+...

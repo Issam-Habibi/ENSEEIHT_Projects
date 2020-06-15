@@ -1,0 +1,33 @@
+/** L'état financier du restaurant
+ * 
+ * @author LOTFI
+ *
+ */
+
+
+public class FinancialState {
+	
+	public double rstBalance;
+	
+	public FinancialState(double balance) {
+		this.rstBalance = balance;
+	}
+	
+	
+	public double getRestauBalance() {
+		return this.rstBalance;
+	}
+	
+	public void setRestauBalance(double newBalance) {
+		 this.rstBalance = newBalance;
+	}
+	
+	public void addGain( double gain) {
+		this.rstBalance = this.rstBalance + gain;
+	}
+	
+	public void SubstractLoss(double perte) {
+		this.rstBalance = this.rstBalance - perte;
+	}
+
+}

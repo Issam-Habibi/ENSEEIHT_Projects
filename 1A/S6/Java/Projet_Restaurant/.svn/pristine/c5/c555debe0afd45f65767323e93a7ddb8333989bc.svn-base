@@ -1,0 +1,21 @@
+/** Une entrée est un plat servi par 
+ * le restaurent
+ * @author ISSAM
+ *
+ */
+
+public class Entree extends PlatAbstrait {
+	
+	/** Construire une entrée à partir de son nom, son prix
+	 * et sa disponibilité
+	 * @param nomPlat le nom de l'entrée
+	 * @param prixPlat le prix de l'entrée
+	 * @param disponibilite la disponibilité de l'entrée
+	 */
+	public Entree(String nomPlat, double prixPlat, boolean disponibilite) {
+		super(nomPlat, prixPlat, disponibilite);
+	}
+
+	
+}
+

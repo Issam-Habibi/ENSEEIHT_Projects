@@ -1,0 +1,41 @@
+import javax.swing.*;
+
+/**
+ * The class handles the graphical side of the program
+ *
+ * @author Hamza MOUDDENE
+ * @version 1.0
+ */
+public class GUI {
+
+    /**
+     * Create a graphical window
+     *
+     * @param name the name of the window
+     * @return the window
+     */
+    public JFrame createWindow(String name, int width, int height) {
+        JFrame window = new JFrame("Home");
+        window.setSize(width, height); //400 width and 500 height
+        window.setLayout(null); //using no layout managers
+        window.setVisible(true); //making the frame visible
+        return window;
+    }
+
+    /**
+     * Create button
+     *
+     * @param name the name of the button
+     * @param x axis of the button
+     * @param y axis of the button
+     * @param width of the button
+     * @param height of the button
+     * @return the button
+     */
+    public JButton createButton(String name, int x, int y, int width, int height) {
+        JButton button = new JButton(name); //creating instance of JButton
+        button.setBounds(x, y, width, height); //x axis, y axis, width, height
+        return button;
+    }
+
+}

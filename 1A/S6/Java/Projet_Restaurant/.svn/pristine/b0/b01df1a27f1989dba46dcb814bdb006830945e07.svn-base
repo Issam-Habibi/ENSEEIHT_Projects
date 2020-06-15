@@ -1,0 +1,209 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.util.Observable;
+import java.util.Observer;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
+
+/**
+ * La version graphique du menu
+ * @author ISSAM
+ *
+ */
+public class MenuSwing implements Observer {
+	
+
+	private Menu menu;
+	private JFrame fenetre;
+	private Choix choix;
+	private JButton bEntree, bPlatP, bDessert, bSignOut, bPay;
+	private JLabel logo, footerLabel, recapLabel;
+	private JPanel headLeft, headCenter, headRight, footer, welcome, recap;
+	
+	//Les dimensions de la fen�tre et des constantes utiles dans le design
+	public final static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	public final static int width = screenSize.width;
+	public final static int height = screenSize.height;
+	int actual_height = height - 40 - 75; //La vraie hauteur de la fen�tre (ayant soustrait l'ent�te et le bas de page) 
+
+	
+	/**Constructeur du menu version Swing
+	 * 
+	 * @param menu le menu 
+	 */
+	public MenuSwing(Menu menu, Choix choix) {
+		
+		GUI MenuModel = new GUI();
+		this.menu = menu;
+		this.choix = choix;
+		//Ajouter un observateur � l'objet choix , pour assurer l'int�ractivit� entre les composantes de l'appli . 
+		this.choix.addObserver(this);
+		
+		//La cr�ation de la fen�tre
+		this.fenetre = MenuModel.createWindow("Menu", 1000, 800);
+		//Maximiser automatiquement la fen�tre
+		this.fenetre.setExtendedState(this.fenetre.getExtendedState() | JFrame.MAXIMIZED_BOTH); 
+
+		//La partie gauche de l'ent�te
+		this.headLeft = MenuModel.createPanel(0, 0, width *176/1536, 40, new Color(211, 211, 211));
+		this.logo = MenuModel.createLabel("Resto'N7", 10, 10, 120, 40);
+		this.headLeft.add(logo);
+		this.fenetre.add(this.headLeft);
+		
+        //La partie droite de l'ent�te
+		this.headCenter = MenuModel.createPanel(width * 176/1536, 0, width * 1024/1536, 40, new Color(211, 211, 211));
+		this.fenetre.add(this.headCenter);
+		this.headRight = MenuModel.createPanel(width * 176/1536 + width * 1024/1536, 0, 
+				width * 336/1536, 40, new Color(211, 211, 211));
+		JLabel text = MenuModel.createLabel("Menu", 10, 10, 200, 40);
+		this.headRight.add(text);
+		this.fenetre.add(this.headRight);
+		
+
+		//The welcoming picture
+        this.welcome = MenuModel.createPanel(350, 40, 702, 395, null);
+		//Lire,Redimonsionner puis ajouter une image � la premi�re partie
+		ImageIcon image = new ImageIcon("src/pics/WELCOME2.png");
+		Image newImage = scaleImage(image.getImage(), 702 , 350);
+		JLabel icon = new JLabel(new ImageIcon(newImage), JLabel.CENTER);
+		this.welcome.add(icon);
+		this.fenetre.add(this.welcome);
+		
+		
+        //BAS DE PAGE
+        this.footer = MenuModel.createPanel(0, height*725/864, width, 75, new Color(211, 211, 211));
+        this.footer.setLayout(new BorderLayout());
+        this.footerLabel = MenuModel.createLabel("� 2020 Resto'N7 ", 0, 0, 100, 50);
+        this.footer.add(this.footerLabel, BorderLayout.CENTER);
+        this.fenetre.add(this.footer);
+        
+        //Cr�ation des bouttons de la pages
+		this.bEntree = MenuModel.createButton("Entrees", width/4 - width *100/1536, actual_height/2 + 110,
+				100, 40, new Color(9, 128, 67), Color.WHITE);
+		//R�cup�rer les entr�es en cliquant sur le boutton Entr�es
+		this.bEntree.addActionListener(new ActionEntree());
+		
+        this.bPlatP = MenuModel.createButton("Plats Principaux", 2*width/4 - width *100/1536, actual_height/2 + 110,
+        		140, 40, new Color(255, 196, 0), Color.WHITE);
+        this.bDessert = MenuModel.createButton("Desserts", 3*width/4 - width *100/1536, actual_height/2 + 110,
+        		200, 40, new Color(0, 222, 255), Color.WHITE);
+
+		this.bPay = MenuModel.createButton("Pay", 3*width/4 - width *100/1536 + 300, actual_height/2 + 220,
+				100, 40, Color.BLUE, Color.WHITE);
+		
+		
+		this.bSignOut = MenuModel.createButton("Sign Out",580, 5, 200, 30, Color.RED, Color.WHITE);
+		//Fermer l'application en cliquant sur le boutton SignOut
+		this.bSignOut.addActionListener(new ActionSignOut());
+		
+		//Ajouter l'ensemble des bouttons au fen�tre
+		this.fenetre.add(this.bSignOut);
+        this.fenetre.add(bEntree);
+        this.fenetre.add(bPlatP);
+        this.fenetre.add(bDessert);
+        this.fenetre.add(bPay);
+        
+        
+		//R�capitulatif du client
+        this.recap = MenuModel.createPanel(5, 500, width - 300, 50, null);
+        this.recap.setLayout(new BorderLayout());
+        this.recapLabel = 
+        		MenuModel.createLabel("<html>Votre Commande :"+this.choix.toStringCommande()+"<br/>    <br/>Prix : "
+        		+this.choix.getPrixTotal()+" £</html>"
+        		,0, 0, 100, 50);
+        this.recap.add(recapLabel, BorderLayout.CENTER);
+        this.fenetre.add(recap);
+		
+
+        //Faciliter la fermeture de la fen�tre et la rendre visible
+		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		fenetre.setVisible(true);
+		
+		bEntree.repaint();
+		bPlatP.repaint();
+		bDessert.repaint();
+		bPay.repaint();
+		bSignOut.repaint();
+
+		
+		
+
+		
+		
+	}
+	
+	
+	/**
+	 * Redimensionner une image
+	 * @param source l'image source
+	 * @param width largeur
+	 * @param height longueur
+	 * @return
+	 */
+	public Image scaleImage(Image source, int width, int height) {
+	    BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+	    Graphics2D g = (Graphics2D) img.getGraphics();
+	    g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+	    g.drawImage(source, 0, 0, width, height, null);
+	    g.dispose();
+	    return img;
+	}
+
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		System.out.println("Vous avez commandé : " +this.choix.toStringCommande());
+		System.out.println("Le prix totale de votre commande pour le moment est : "+this.choix.getPrixTotal()+"£");
+	}
+	
+	
+	public class ActionEntree implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			fenetre.dispose();
+			EntreeSwing entreeSwing = new EntreeSwing(MenuSwing.this);
+		}
+
+	}
+	
+	public class ActionSignOut implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			System.exit(0);
+		}
+
+	}
+	public Menu getMenu() {
+		return this.menu;
+	}
+	
+	public Choix getChoix() {
+		return this.choix;
+	}
+	
+	public JFrame getFenetre() {
+		return this.fenetre;
+	}
+	
+
+}

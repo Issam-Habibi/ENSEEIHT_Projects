@@ -1,0 +1,131 @@
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+/**
+ * The class that launchs the registration
+ *
+ * @author Hamza MOUDDENE
+ * @version 1.0
+ */
+public class SignUp implements ActionListener {
+
+    JFrame windowLog;
+    JLabel l1;
+    JTextField text1;
+    JLabel l2;
+    JTextField text2;
+    JLabel l3;
+    JRadioButton r1;
+    JRadioButton r2;
+    ButtonGroup bg;
+    JLabel l4;
+    JTextField text4;
+    JLabel l5;
+    JPasswordField passwd;
+    JButton submit;
+
+    /**
+     * Constructor of the registration feauture
+     */
+    public SignUp() {
+        GUI regiseration = new GUI();
+
+        this.windowLog = regiseration.createWindow("Sign up", 1000, 800);
+
+        this.l1 = regiseration.createLabel("First name", 400, 100, 80, 30);
+        this.text1 = regiseration.createText(600, 100, 100, 30);
+
+        this.l2 = regiseration.createLabel("Last name", 400, 200, 80, 30);
+        this.text2 = regiseration.createText(600, 200, 100, 30);
+
+        this.l3 = regiseration.createLabel("Gender", 400, 300, 80, 30);
+        this.r1 = new JRadioButton("Male");
+        this.r2 = new JRadioButton("Female");
+        r1.setBounds(500, 300, 100, 30);
+        r2.setBounds(600, 300, 100, 30);
+        this.bg = new ButtonGroup();
+        bg.add(r1);
+        bg.add(r2);
+
+        this.l4 = regiseration.createLabel("Username", 400, 400, 80, 30);
+        this.text4 = regiseration.createText(600, 400, 100, 30);
+
+        this.l5 = regiseration.createLabel("Password", 400, 500, 80, 30);
+        this.passwd = regiseration.createPasswd(600, 500, 100, 30);
+
+        this.submit = regiseration.createButton("Submit", 500, 600, 100, 30, new Color(59, 114, 117), Color.WHITE);
+
+        windowLog.add(l1);
+        windowLog.add(text1);
+        windowLog.add(l2);
+        windowLog.add(text2);
+        windowLog.add(l3);
+        windowLog.add(r1);
+        windowLog.add(r2);
+        windowLog.add(l4);
+        windowLog.add(text4);
+        windowLog.add(l5);
+        windowLog.add(passwd);
+        windowLog.add(submit);
+        submit.addActionListener(this);
+    }
+
+    public void createNewUser(String gender) {
+        JSONParser parser = new JSONParser();
+        try {
+            JSONArray userList = (JSONArray) parser.parse(new FileReader("data/users.json"));
+
+            // new user
+            JSONObject newUser = new JSONObject();
+            newUser.put("First name", text1.getText());
+            newUser.put("Last name", text2.getText());
+            newUser.put("Gender", gender);
+            newUser.put("Username", text4.getText());
+            newUser.put("Password", new String(passwd.getPassword()));
+
+            // Add the new user to the user list
+            userList.add(newUser);
+
+            // Write the new userList to the JSON file
+            try (FileWriter file = new FileWriter("data/users.json")) {
+
+                file.write(userList.toJSONString());
+                file.flush();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == submit) {
+            if (r1.isSelected()) {
+                createNewUser("Male");
+            } else if (r2.isSelected()) {
+                createNewUser("Female");
+            }
+            JOptionPane.showMessageDialog(windowLog,"Your account has been created with success.");
+        }
+    }
+}

@@ -1,0 +1,73 @@
+
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+/**
+ *  This class handles the menu which contains all the functionalities
+ *   for an registered customer 
+ *
+ * @author Hatim MESKINE
+ * @version 1.0
+ */
+
+public class RegisteredCustomer implements ActionListener {
+
+	JFrame windowRegCust;
+    JButton b1, b2, b3, b4, b5, b6;
+    
+	public RegisteredCustomer(String Username) {
+		GUI RegCust = new GUI();
+        this.windowRegCust = RegCust.createWindow("Welcome "+Username, 1000, 800);
+        this.b1 = RegCust.createButton("Visualiser le menu", 100, 400, 80, 30, new Color(54, 191, 247), Color.WHITE);
+        this.b2 = RegCust.createButton("Faire une commande", 200, 400, 80, 30, new Color(54, 191, 247), Color.WHITE);
+        this.b3 = RegCust.createButton("Reserver une table", 300, 400, 80, 30, new Color(54, 191, 247), Color.WHITE);
+        this.b4 = RegCust.createButton("Avis et notes ", 400, 400, 80, 30, new Color(54, 191, 247), Color.WHITE);
+        this.b5 = RegCust.createButton("Points de fidélité ", 500, 400, 80, 30, new Color(54, 191, 247), Color.WHITE);
+        this.b6 = RegCust.createButton("Logout ", 900, 700, 20, 10, new Color(54, 191, 247), Color.RED);
+
+        windowRegCust.add(b1);
+        b1.addActionListener(this);
+        windowRegCust.add(b2);
+        b2.addActionListener(this);
+        windowRegCust.add(b3);
+        b3.addActionListener(this);
+        windowRegCust.add(b4);
+        b4.addActionListener(this);
+        windowRegCust.add(b5);
+        b5.addActionListener(this);
+        windowRegCust.add(b6);
+        b6.addActionListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+		 if (evt.getSource() == b1) {
+	                
+	            } 
+		 else if (evt.getSource() == b2){
+
+		 }
+		 else if (evt.getSource() == b3) {
+			 
+		 }
+		 else if (evt.getSource() == b4) {
+			 
+		 }
+         else if (evt.getSource() == b5) {
+			 
+		 }
+         else if (evt.getSource() == b6) {
+        	 this.windowRegCust.setVisible(false);
+        	 SignIn Login = new SignIn();
+        	 Login.windowLog.setVisible(true);
+		 }
+	}
+	
+
+}

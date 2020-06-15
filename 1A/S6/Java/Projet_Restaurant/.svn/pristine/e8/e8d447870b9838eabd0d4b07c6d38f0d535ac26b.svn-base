@@ -1,0 +1,21 @@
+/** Un dessert est un plat servi par 
+ * le restaurant
+ * @author ISSAM
+ *
+ */
+
+public class Dessert extends PlatAbstrait {
+	
+	/** Construire une entrée à partir de son nom, son prix
+	 * et sa disponibilité
+	 * @param nomPlat le nom de l'entrée
+	 * @param prixPlat le prix de l'entrée
+	 * @param disponibilite la disponibilité de l'entrée
+	 */
+	public Dessert(String nomPlat, double prixPlat, boolean disponibilite) {
+		super(nomPlat, prixPlat, disponibilite);
+	}
+
+	
+}
+

@@ -1,0 +1,17 @@
+/**
+ * The main class that launch the program
+ *
+ * @author Hamza MOUDDENE
+ * @version 1.0
+ */
+public class Main {
+
+    /**
+     * The main method
+     *
+     * @param args java command line arguments
+     */
+    public static void main(String[] args) {
+        new Home();
+    }
+}
